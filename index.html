@@ -28,7 +28,7 @@
     requires CMake. On Linux and macOS, if a suitable system build of 
     NLopt (2.7.0 or later) is found, it is used; otherwise, it is built 
     from included sources via CMake. On Windows, NLopt is obtained through 
-    rwinlib for R &lt;= 4.1.x or grabbed from the Rtools42 toolchain for 
+    rwinlib for R &lt;= 4.1.x or grabbed from the appropriate toolchain for
     R &gt;= 4.2.0.">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -51,7 +51,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">nloptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3.9100</span>
       </span>
     </div>
 
@@ -93,8 +93,10 @@
 <!-- badges: start -->
 
 <p><a href="https://astamm.github.io/nloptr/" class="external-link"><strong>nloptr</strong></a> is an R interface to <a href="https://nlopt.readthedocs.io/en/latest/" class="external-link">NLopt</a>, a free/open-source library for nonlinear optimization started by Steven G. Johnson, providing a common interface for a number of different free optimization routines available online as well as original implementations of various other algorithms. It can be used to solve general nonlinear programming problems with nonlinear constraints and lower and upper bounds for the controls, such as</p>
-<p>min<sub><em>x</em> ∈ ℝ<sup><em>n</em></sup></sub>  <em>f</em>(<em>x</em>),</p>
-<p>s.t. <em>g</em>(<em>x</em>) ≤ 0, <em>h</em>(<em>x</em>) = 0 and ℓ ≤ <em>x</em> ≤ <em>u</em>.</p>
+<div class="figure">
+<img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;%5Cmin_%7Bx%20%5Cin%20%5Cmathbb%7BR%7D%5En%7D%20%5Cquad%20f%28x%29%2C" title="\min_{x \in \mathbb{R}^n} \quad f(x)," alt=""><p class="caption">_{x ^n} f(x),</p>
+</div>
+<p>s.t. <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;g%28x%29%20%5Cle%200" title="g(x) \le 0" alt="g(x) ">, <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;h%28x%29%20%3D%200" title="h(x) = 0" alt="h(x) = 0"> and <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;%5Cell%20%5Cle%20x%20%5Cle%20u" title="\ell \le x \le u" alt="x u">.</p>
 <p>The <a href="https://nlopt.readthedocs.io/en/latest/" class="external-link">NLopt</a> library is available under the GNU Lesser General Public License (LGPL), and the copyrights are owned by a variety of authors. See the <a href="https://nlopt.readthedocs.io/en/latest/Citing_NLopt/" class="external-link">website</a> for information on how to cite NLopt and the algorithms you use.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -102,7 +104,7 @@
 <div class="section level3">
 <h3 id="windows">Windows<a class="anchor" aria-label="anchor" href="#windows"></a>
 </h3>
-<p>On Windows, either the latest version <code>2.7.1</code> of <a href="https://nlopt.readthedocs.io/en/latest/" class="external-link">NLopt</a> from <a href="https://github.com/rwinlib/nlopt" class="external-link">rwinlib</a> (windows-release) or a <code>v2.6</code> build from the <code>rtools42</code> toolchain (windows2022-devel) is used. So there is nothing else to be done.</p>
+<p>On Windows, either the latest version <code>2.7.1</code> of <a href="https://nlopt.readthedocs.io/en/latest/" class="external-link">NLopt</a> from <a href="https://github.com/rwinlib/nlopt" class="external-link">rwinlib</a> (windows-release) or the <code>v2.7.1</code> build from the <code>rtools42</code> toolchain (windows2022-devel) is used. So there is nothing else to be done.</p>
 </div>
 <div class="section level3">
 <h3 id="linux-and-macos">Linux and macOS<a class="anchor" aria-label="anchor" href="#linux-and-macos"></a>
@@ -116,6 +118,7 @@
 <div class="section level3">
 <h3 id="installing-cmake-macos-and-linux-only">Installing <a href="https://cmake.org" class="external-link">CMake</a> (macOS and Linux only)<a class="anchor" aria-label="anchor" href="#installing-cmake-macos-and-linux-only"></a>
 </h3>
+<p>Minimal version requirement for <code>cmake</code> is <code>3.2.0</code>.</p>
 <p>You can install <a href="https://cmake.org" class="external-link">CMake</a> by following <a href="https://cmake.org/install/" class="external-link">CMake installation instructions</a>. The important thing is that you add the <a href="https://cmake.org" class="external-link">CMake</a> binary to your <code>PATH</code>:</p>
 <ul>
 <li>On macOS, you can install <a href="https://cmake.org" class="external-link">CMake</a> and then run it. In the menu bar, there is an item <em>How to Install For Command Line Use</em> which you can click on to have proper instructions on how to update your <code>PATH</code>. Note that the location of the <a href="https://cmake.org" class="external-link">CMake</a> binary is always <code>/Applications/CMake.app/Contents/bin/cmake</code>. Hence, <a href="https://astamm.github.io/nloptr/" class="external-link"><strong>nloptr</strong></a> knows where to find it even if you do not update your <code>PATH</code>.</li>
@@ -205,7 +208,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

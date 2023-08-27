@@ -20,7 +20,7 @@ difference approximation and prints the results of these checks."><meta property
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nloptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3.9100</span>
       </span>
     </div>
 
@@ -61,42 +61,57 @@ difference approximation and prints the results of these checks.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">check.derivatives</span><span class="op">(</span>
-  <span class="va">.x</span>,
-  <span class="va">func</span>,
-  <span class="va">func_grad</span>,
-  check_derivatives_tol <span class="op">=</span> <span class="fl">1e-04</span>,
-  check_derivatives_print <span class="op">=</span> <span class="st">"all"</span>,
-  func_grad_name <span class="op">=</span> <span class="st">"grad_f"</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">check.derivatives</span><span class="op">(</span></span>
+<span>  <span class="va">.x</span>,</span>
+<span>  <span class="va">func</span>,</span>
+<span>  <span class="va">func_grad</span>,</span>
+<span>  check_derivatives_tol <span class="op">=</span> <span class="fl">1e-04</span>,</span>
+<span>  check_derivatives_print <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>  func_grad_name <span class="op">=</span> <span class="st">"grad_f"</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>.x</dt>
 <dd><p>point at which the comparison is done.</p></dd>
+
+
 <dt>func</dt>
 <dd><p>function to be evaluated.</p></dd>
+
+
 <dt>func_grad</dt>
 <dd><p>function calculating the analytic gradients.</p></dd>
+
+
 <dt>check_derivatives_tol</dt>
 <dd><p>option determining when differences between the
 analytic gradient and its finite difference approximation are flagged as an
 error.</p></dd>
+
+
 <dt>check_derivatives_print</dt>
 <dd><p>option related to the amount of output. 'all'
 means that all comparisons are shown, 'errors' only shows comparisons that
 are flagged as an error, and 'none' shows the number of errors only.</p></dd>
+
+
 <dt>func_grad_name</dt>
 <dd><p>option to change the name of the gradient function
 that shows up in the output.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>further arguments passed to the functions func and func_grad.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The return value contains a list with the analytic gradient, its
+    
+
+<p>The return value contains a list with the analytic gradient, its
 finite difference approximation, the relative errors, and vector comparing
 the relative errors to the tolerance.</p>
     </div>
@@ -111,128 +126,121 @@ the relative errors to the tolerance.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://astamm.github.io/nloptr/index.html" class="external-link">'nloptr'</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># example with correct gradient</span></span>
-<span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span> <span class="va">x</span>, <span class="va">a</span> <span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span> <span class="op">(</span> <span class="va">x</span> <span class="op">-</span> <span class="va">a</span> <span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">)</span> <span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">f_grad</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span> <span class="va">x</span>, <span class="va">a</span> <span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span> <span class="fl">2</span><span class="op">*</span><span class="op">(</span> <span class="va">x</span> <span class="op">-</span> <span class="va">a</span> <span class="op">)</span> <span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">check.derivatives</span><span class="op">(</span> .x<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, func<span class="op">=</span><span class="va">f</span>, func_grad<span class="op">=</span><span class="va">f_grad</span>,</span>
-<span class="r-in">    check_derivatives_print<span class="op">=</span><span class="st">'none'</span>, a<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://astamm.github.io/nloptr/index.html" class="external-link">'nloptr'</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># example with correct gradient</span></span></span>
+<span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">a</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">a</span><span class="op">)</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">f_grad</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">a</span><span class="op">)</span>  <span class="fl">2</span> <span class="op">*</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">a</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">check.derivatives</span><span class="op">(</span>.x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, func <span class="op">=</span> <span class="va">f</span>, func_grad <span class="op">=</span> <span class="va">f_grad</span>,</span></span>
+<span class="r-in"><span>          check_derivatives_print <span class="op">=</span> <span class="st">'none'</span>, a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Derivative checker results: 0 error(s) detected.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $analytic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1.585021  3.027326  5.073553  6.915125  8.104033 11.622276 12.651142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 15.916782 16.288279 19.708358</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.8061264  3.3598735  4.7536379  7.5314704  9.9029937 10.4878141</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 13.6334937 15.3500128 16.2601801 19.2520414</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $finite_difference</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1.585018  3.027325  5.073552  6.915125  8.104033 11.622276 12.651142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 15.916782 16.288279 19.708358</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.8061256  3.3598747  4.7536379  7.5314703  9.9029938 10.4878146</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 13.6334937 15.3500133 16.2601802 19.2520416</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $relative_error</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1.681943e-06 4.856079e-07 1.242118e-08 2.747453e-08 5.331180e-08</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] 7.292062e-09 6.294142e-09 5.470871e-09 1.604146e-09 3.813495e-09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 9.288668e-07 3.785025e-07 4.146928e-09 8.594194e-09 8.454605e-09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] 4.272781e-08 8.831684e-10 2.924411e-08 1.011881e-09 1.055548e-08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $flag_derivative_warning</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># example with incorrect gradient</span></span>
-<span class="r-in"><span class="va">f_grad</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span> <span class="va">x</span>, <span class="va">a</span> <span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span> <span class="fl">2</span><span class="op">*</span><span class="op">(</span> <span class="va">x</span> <span class="op">-</span> <span class="va">a</span> <span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">.1</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">8</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">check.derivatives</span><span class="op">(</span> .x<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, func<span class="op">=</span><span class="va">f</span>, func_grad<span class="op">=</span><span class="va">f_grad</span>,</span>
-<span class="r-in">    check_derivatives_print<span class="op">=</span><span class="st">'errors'</span>, a<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># example with incorrect gradient</span></span></span>
+<span class="r-in"><span><span class="va">f_grad</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">a</span><span class="op">)</span>  <span class="fl">2</span> <span class="op">*</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">a</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.1</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">check.derivatives</span><span class="op">(</span>.x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, func <span class="op">=</span> <span class="va">f</span>, func_grad <span class="op">=</span> <span class="va">f_grad</span>,</span></span>
+<span class="r-in"><span>          check_derivatives_print <span class="op">=</span> <span class="st">'errors'</span>, a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Derivative checker results: 1 error(s) detected.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * grad_f[  2 ] = 3.685927e+00 ~ 3.585926e+00   [2.788694e-02]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> * grad_f[ 2] = 2.371624e+00 ~ 2.271624e+00   [4.402145e-02]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $analytic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1.647658  3.685927  5.517322  7.600386  9.149412 11.881121 12.808784</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 15.512077 17.028152 18.255867</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.884096  2.371624  5.543150  6.165714  8.185518 11.460453 12.125435</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 15.695074 17.324859 18.708667</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $finite_difference</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1.647659  3.585926  5.517321  7.600387  9.149412 11.881121 12.808784</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 15.512077 17.028152 18.255867</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.8840981  2.2716236  5.5431506  6.1657152  8.1855186 11.4604530</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 12.1254354 15.6950746 17.3248596 18.7086678</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $relative_error</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 8.309025e-07 2.788694e-02 1.186381e-07 3.363619e-08 2.396147e-08</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] 2.611585e-08 4.445678e-09 1.822170e-08 9.167173e-09 2.035498e-09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 2.295919e-06 4.402145e-02 7.260971e-08 1.255969e-07 5.126785e-08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] 2.868620e-08 2.059534e-08 7.981032e-09 2.523864e-08 1.904095e-08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $flag_derivative_warning</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># example with incorrect gradient of vector-valued function</span></span>
-<span class="r-in"><span class="va">g</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span> <span class="va">x</span>, <span class="va">a</span> <span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">-</span><span class="va">a</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span> <span class="op">(</span><span class="va">x</span><span class="op">-</span><span class="va">a</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">)</span> <span class="op">)</span> <span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">g_grad</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span> <span class="va">x</span>, <span class="va">a</span> <span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">.01</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">8</span><span class="op">)</span><span class="op">)</span>, <span class="fl">2</span><span class="op">*</span><span class="op">(</span><span class="va">x</span><span class="op">-</span><span class="va">a</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">.1</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">8</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span> <span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">check.derivatives</span><span class="op">(</span> .x<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, func<span class="op">=</span><span class="va">g</span>, func_grad<span class="op">=</span><span class="va">g_grad</span>,</span>
-<span class="r-in">    check_derivatives_print<span class="op">=</span><span class="st">'all'</span>, a<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># example with incorrect gradient of vector-valued function</span></span></span>
+<span class="r-in"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">a</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">a</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">a</span><span class="op">)</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">g_grad</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">a</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.01</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>   <span class="fl">2</span> <span class="op">*</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">a</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.1</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">check.derivatives</span><span class="op">(</span>.x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, func <span class="op">=</span> <span class="va">g</span>, func_grad <span class="op">=</span> <span class="va">g_grad</span>,</span></span>
+<span class="r-in"><span>          check_derivatives_print <span class="op">=</span> <span class="st">'all'</span>, a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Derivative checker results: 2 error(s) detected.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 1,  1 ] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 2,  1 ] = 1.606398e+00 ~ 1.606400e+00   [9.093500e-07]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * grad_f[ 1,  2 ] = 1.010000e+00 ~ 1.000000e+00   [1.000000e-02]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * grad_f[ 2,  2 ] = 2.890316e+00 ~ 2.790316e+00   [3.583837e-02]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 1,  3 ] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 2,  3 ] = 5.197855e+00 ~ 5.197854e+00   [6.229298e-08]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 1,  4 ] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 2,  4 ] = 7.842455e+00 ~ 7.842455e+00   [2.968849e-09]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 1,  5 ] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 2,  5 ] = 8.800327e+00 ~ 8.800327e+00   [1.885858e-08]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 1,  6 ] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 2,  6 ] = 1.094642e+01 ~ 1.094642e+01   [2.495684e-08]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 1,  7 ] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 2,  7 ] = 1.390182e+01 ~ 1.390182e+01   [1.847089e-09]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 1,  8 ] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 2,  8 ] = 1.425665e+01 ~ 1.425665e+01   [1.045208e-08]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 1,  9 ] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 2,  9 ] = 1.619220e+01 ~ 1.619220e+01   [2.044082e-08]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 1, 10 ] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[ 2, 10 ] = 1.829879e+01 ~ 1.829879e+01   [1.855134e-08]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[1,  1] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[2,  1] = 1.699261e+00 ~ 1.699265e+00   [2.129267e-06]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> * grad_f[1,  2] = 1.010000e+00 ~ 1.000000e+00   [1.000000e-02]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> * grad_f[2,  2] = 3.342835e+00 ~ 3.242836e+00   [3.083692e-02]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[1,  3] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[2,  3] = 4.138814e+00 ~ 4.138814e+00   [5.273006e-08]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[1,  4] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[2,  4] = 7.051631e+00 ~ 7.051631e+00   [1.994286e-08]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[1,  5] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[2,  5] = 9.639038e+00 ~ 9.639038e+00   [5.792361e-08]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[1,  6] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[2,  6] = 1.181546e+01 ~ 1.181546e+01   [4.207800e-08]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[1,  7] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[2,  7] = 1.227812e+01 ~ 1.227812e+01   [1.170833e-08]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[1,  8] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[2,  8] = 1.413821e+01 ~ 1.413821e+01   [2.904987e-08]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[1,  9] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[2,  9] = 1.678774e+01 ~ 1.678774e+01   [2.539275e-08]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[1, 10] = 1.000000e+00 ~ 1.000000e+00   [0.000000e+00]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   grad_f[2, 10] = 1.951466e+01 ~ 1.951467e+01   [1.541016e-08]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $analytic</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]     [,8]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.000000 1.010000 1.000000 1.000000 1.000000  1.00000  1.00000  1.00000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.606398 2.890316 5.197855 7.842455 8.800327 10.94642 13.90182 14.25665</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         [,9]    [,10]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0000  1.00000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 16.1922 18.29879</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.699261 3.342835 4.138814 7.051631 9.639038 11.81546 12.27812 14.13821</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          [,9]    [,10]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.00000  1.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 16.78774 19.51466</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $finite_difference</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]     [,8]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.0000 1.000000 1.000000 1.000000 1.000000  1.00000  1.00000  1.00000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.6064 2.790316 5.197854 7.842455 8.800327 10.94642 13.90182 14.25665</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         [,9]    [,10]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0000  1.00000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 16.1922 18.29879</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]     [,8]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.000000 1.000000 1.000000 1.000000 1.000000  1.00000  1.00000  1.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.699265 3.242836 4.138814 7.051631 9.639038 11.81546 12.27812 14.13821</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          [,9]    [,10]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.00000  1.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 16.78774 19.51467</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $relative_error</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]       [,2]         [,3]         [,4]         [,5]         [,6]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.0000e+00 0.01000000 0.000000e+00 0.000000e+00 0.000000e+00 0.000000e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 9.0935e-07 0.03583837 6.229298e-08 2.968849e-09 1.885858e-08 2.495684e-08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              [,1]       [,2]         [,3]         [,4]         [,5]       [,6]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.000000e+00 0.01000000 0.000000e+00 0.000000e+00 0.000000e+00 0.0000e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 2.129267e-06 0.03083692 5.273006e-08 1.994286e-08 5.792361e-08 4.2078e-08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              [,7]         [,8]         [,9]        [,10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.000000e+00 0.000000e+00 0.000000e+00 0.000000e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.847089e-09 1.045208e-08 2.044082e-08 1.855134e-08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.170833e-08 2.904987e-08 2.539275e-08 1.541016e-08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $flag_derivative_warning</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       [,1] [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] FALSE TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] FALSE TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -247,7 +255,7 @@ the relative errors to the tolerance.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
