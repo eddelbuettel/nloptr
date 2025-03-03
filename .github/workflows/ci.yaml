@@ -15,7 +15,7 @@ jobs:
       matrix:
         include:
           #- {os: macos-latest}
-          - {os: ubuntu-latest, deb: liblopt-dev}
+          - {os: ubuntu-latest, deb: libnlopt-dev}
           - {os: ubuntu-latest, deb: cmake}
           #- {os: ubuntu-24.04-arm}
 

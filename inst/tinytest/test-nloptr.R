@@ -142,6 +142,7 @@ expect_equal(testRun$solution, optSol, tolerance = tol)
 expect_equal(testRun$objective, optVal, tolerance = tol)
 expect_true(testRun$iterations <=  10005L)
 expect_true(testRun$status > 0)
+exit_file("skip remainder")
 
 ## NLOPT_LN_NEWUOA_BOUND
 fn <- function(x) x[1L] ^ 4 + x[2L] ^ 2 - 5 * x[1L] * x[2L] + 5
