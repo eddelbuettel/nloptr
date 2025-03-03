@@ -142,8 +142,8 @@ expect_equal(testRun$solution, optSol, tolerance = tol)
 expect_equal(testRun$objective, optVal, tolerance = tol)
 expect_true(testRun$iterations <=  10005L)
 expect_true(testRun$status > 0)
-exit_file("skip remainder")
 
+if (FALSE) {
 ## NLOPT_LN_NEWUOA_BOUND
 fn <- function(x) x[1L] ^ 4 + x[2L] ^ 2 - 5 * x[1L] * x[2L] + 5
 gr <- function(x) c(4 * x[1L] ^ 3 - 5 * x[2L], 2 * x[2L] - 5 * x[1L])
@@ -162,6 +162,7 @@ expect_equal(testRun$objective, optVal, tolerance = tol)
 expect_true(testRun$iterations <= ctl$maxeval + 5)
 expect_true(testRun$status > 0)
 
+
 ## NLOPT_GN_ESCH
 alg <- list(algorithm = "NLOPT_GN_ESCH")
 ctl <- list(xtol_rel = 1e-8, maxeval = 50000L)
@@ -171,7 +172,7 @@ expect_equal(testRun$solution, optSol, tolerance = 1e-2)
 expect_equal(testRun$objective, optVal, tolerance = 1e-2)
 expect_true(testRun$iterations <= ctl$maxeval + 5)
 expect_true(testRun$status > 0)
-
+}
 if (nloptr:::have.nlopt.ld.lbfgs.nocedal) {
 ## NLOPT_LD_LBFGS_NOCEDAL
 # NLOPT_LD_LBFGS_NOCEDAL as this algorithm has not been included as of NLOPT
