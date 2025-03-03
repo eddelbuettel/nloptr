@@ -15,7 +15,8 @@ jobs:
       matrix:
         include:
           #- {os: macos-latest}
-          - {os: ubuntu-latest}
+          - {os: ubuntu-latest, deb: liblopt-dev}
+          - {os: ubuntu-latest, deb: cmake}
           #- {os: ubuntu-24.04-arm}
 
     runs-on: ${{ matrix.os }}
@@ -28,7 +29,7 @@ jobs:
 
       - name: Dependencies
         run: |
-          ./run.sh install_aptget libnlopt-dev
+          ./run.sh install_aptget ${{ matrix.deb }}
           ./run.sh install_all
 
       - name: Test
